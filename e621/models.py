@@ -496,6 +496,16 @@ class _HasPostIdsAndE621API(Protocol):
 
 
 class _PostsGetterMixin:
+    """
+    A mixin class that provides a cached property to retrieve posts using post IDs and the e621 API.
+
+    Attributes:
+        posts (List[Post]): A list of Post objects retrieved using the e621 API and post IDs.
+
+    Usage:
+        Instantiate a class that inherits from _PostsGetterMixin and _HasPostIdsAndE621API.
+        Access the `posts` attribute to retrieve the list of Post objects.
+    """
     @cached_property
     def posts(self: _HasPostIdsAndE621API) -> List[Post]:
         return self.e621api.posts.search(tags=f"id:{','.join(map(str, self.post_ids))}")
