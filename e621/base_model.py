@@ -16,7 +16,11 @@ class BaseModel(pydantic.BaseModel):
         e621api: Any
 
     class Config:
-        keep_untouched = (cached_property,)
+        ignored_types = (cached_property,)
+
+    def __init__(self, **data: Any):
+        data["e621api"] = data.get("e621api", None)
+        super().__init__(**data)
 
     @classmethod
     def from_list(cls, list: List[Dict[str, Any]], api: "E621", ignore_errors: bool = False) -> List[Self]:
@@ -54,7 +58,7 @@ class BaseModel(pydantic.BaseModel):
     ) -> Union[Self, List[Self]]:
         json: Union[Dict[Any, Any], List[Any]] = response.json()
         # {"post": {<post_info>}} or {"posts": [{<post_info>}, ...]}
-        if isinstance(json, dict) and len(cls.schema()["required"]) > len(json) and len(json) == 1:
+        if isinstance(json, dict) and len(cls.model_json_schema()["required"]) > len(json) and len(json) == 1:
             json = json[list(json)[0]]
 
         if isinstance(json, list) and expect is list:
