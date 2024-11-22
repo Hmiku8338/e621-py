@@ -126,7 +126,7 @@ class TagAlias(BaseModel):
     antecedent_name: str
     reason: str
     creator_id: int
-    created_at: str
+    created_at: Optional[str] = None
     forum_post_id: Optional[int]
     updated_at: Optional[str]
     forum_topic_id: Optional[int]
@@ -231,7 +231,7 @@ class WikiPage(BaseModel):
     is_deleted: bool
     other_names: List[str]
     creator_name: str
-    category_name: int
+    category_name: Optional[int] = None
 
 
 class WikiPageVersion(BaseModel):
@@ -407,21 +407,21 @@ class Post(BaseModel):
     created_at: str
     updated_at: Optional[str]
     file_obj: Optional[File] = Field(default=None, alias="file")
-    file_url: Optional[str]
-    large_file_url: Optional[str]
-    preview_file_url: Optional[str]
-    file_ext: Optional[str]
-    file_size: Optional[int]
+    file_url: Optional[str] = None
+    large_file_url: Optional[str] = None
+    preview_file_url: Optional[str] = None
+    file_ext: Optional[str] = None
+    file_size: Optional[int] = None
     preview: Optional[Preview]
     sample: Optional[Sample]
     score: Union[Score, None, str]
     tags: Optional[Tags]
     locked_tags: Optional[List[str]]
-    tag_string_general: Optional[str]
-    tag_string_character: Optional[str]
-    tag_string_copyright: Optional[str]
-    tag_string_artist: Optional[str]
-    tag_string_meta: Optional[str]
+    tag_string_general: Optional[str] = None
+    tag_string_character: Optional[str] = None
+    tag_string_copyright: Optional[str] = None
+    tag_string_artist: Optional[str] = None
+    tag_string_meta: Optional[str] = None
     change_seq: Optional[int]
     flags: Optional[Flags]
     rating: str
@@ -510,7 +510,7 @@ class Pool(BaseModel, _PostsGetterMixin):
     description: str
     is_active: Optional[bool]
     category: str
-    is_deleted: Optional[bool]
+    is_deleted: Optional[bool] = None
     post_ids: List[int]
     creator_name: str
     post_count: int
@@ -541,8 +541,8 @@ class AuthenticatedUser(User):
     neutral_feedback_count: int
     negative_feedback_count: int
     upload_limit: int
-    show_avatars: bool
-    blacklist_avatars: bool
+    show_avatars: Optional[bool] = None
+    blacklist_avatars: Optional[bool] = None
     blacklist_users: bool
     description_collapsed_initially: bool
     hide_comments: bool
@@ -554,14 +554,14 @@ class AuthenticatedUser(User):
     enable_privacy_mode: bool
     style_usernames: bool
     enable_auto_complete: bool
-    has_saved_searches: bool
+    has_saved_searches: Optional[bool] = None
     disable_cropped_thumbnails: bool
-    disable_mobile_gestures: bool
+    disable_mobile_gestures: Optional[bool] = None
     enable_safe_mode: bool
     disable_responsive_mode: bool
-    disable_post_tooltips: bool
+    disable_post_tooltips: Optional[bool] = None
     no_flagging: bool
-    no_feedback: bool
+    no_feedback: Optional[bool] = None
     disable_user_dmails: bool
     enable_compact_uploader: bool
     replacements_beta: bool
